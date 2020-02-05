@@ -7,8 +7,8 @@ const UserSchema = new mongoose.Schema({
     type: String,
     require: true
   },
-  emaiil: {
-    //seperate field for username
+  email: {
+    //seperate field for username, also ensure each username is unique
     type: String,
     required: true,
     unique: true

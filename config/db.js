@@ -8,6 +8,7 @@ const connectDB = async () => {
   try {
     await mongoose.connect(db, {
       useNewUrlParser: true,
+      useCreateIndex: true,
       useUnifiedTopology: true //added because of deprecation warning, make note in case this causes a problem in the future, I was under the assumption all you needed was useNewURLParser
     });
 
