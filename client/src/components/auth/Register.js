@@ -1,9 +1,15 @@
 import React, { Fragment, useState } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { setAlert } from '../../actions/alert';
+import PropTypes from 'prop-types';
+
 //Using axios to access backend with the below, commented out code
 //import axios from 'axios';
 
-const Register = () => {
+//can destructure props. Instead of Register = props, can do Register = ({ setAlert })
+const Register = ({ setAlert }) => {
+  //will connect this method to redux
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,7 +25,7 @@ const Register = () => {
   const onSubmit = async e => {
     e.preventDefault();
     if (password !== password2) {
-      console.log('Passowrds do not match');
+      setAlert('Passowrds do not match', 'danger'); //will generate id in alert.js, "danger" is the alert type
     } else {
       console.log('SUCCESS');
 
@@ -109,4 +115,9 @@ const Register = () => {
   );
 };
 
-export default Register;
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired
+};
+
+export default connect(null, { setAlert })(Register);
+//setAlert portions will allow us to access props.setAlert
