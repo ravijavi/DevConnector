@@ -2,13 +2,14 @@ import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
 //Using axios to access backend with the below, commented out code
 //import axios from 'axios';
 
 //can destructure props. Instead of Register = props, can do Register = ({ setAlert })
-const Register = ({ setAlert }) => {
+const Register = ({ setAlert, register }) => {
   //will connect this method to redux
   const [formData, setFormData] = useState({
     name: '',
@@ -27,7 +28,7 @@ const Register = ({ setAlert }) => {
     if (password !== password2) {
       setAlert('Passowrds do not match', 'danger'); //will generate id in alert.js, "danger" is the alert type
     } else {
-      console.log('SUCCESS');
+      register({ name, email, password }); //going to take in object with name, email, and password
 
       //I plan to implement this with a redux action, this is a successful attempt to register with React and Node.js working in tandem, result checked out in MongoDB Atlas with the creation of a new user
       /*
@@ -116,8 +117,9 @@ const Register = ({ setAlert }) => {
 };
 
 Register.propTypes = {
-  setAlert: PropTypes.func.isRequired
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired
 };
 
-export default connect(null, { setAlert })(Register);
+export default connect(null, { setAlert, register })(Register);
 //setAlert portions will allow us to access props.setAlert
