@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 //import axios from 'axios';
 
 //can destructure props. Instead of Register = props, can do Register = ({ setAlert })
-const Register = ({ setAlert, register }) => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
   //will connect this method to redux
   const [formData, setFormData] = useState({
     name: '',
@@ -56,6 +56,11 @@ const Register = ({ setAlert, register }) => {
       */
     }
   };
+
+  if (isAuthenticated) {
+    return <Redirect to='/dashboard' />;
+  }
+
   return (
     <Fragment>
       <h1 className='large text-primary'>Sign Up</h1>
@@ -118,8 +123,13 @@ const Register = ({ setAlert, register }) => {
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
-  register: PropTypes.func.isRequired
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
 };
 
-export default connect(null, { setAlert, register })(Register);
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated //will give us everything from initialState
+});
+
+export default connect(mapStateToProps, { setAlert, register })(Register);
 //setAlert portions will allow us to access props.setAlert
