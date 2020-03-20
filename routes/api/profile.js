@@ -9,6 +9,7 @@ const { check, validationResult } = require('express-validator');
 
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
+const Post = require('../../models/Post');
 
 /*
 //@route GET api/profile
@@ -143,6 +144,8 @@ router.get('/', async (req, res) => {
 //@access Private
 router.delete('/', auth, async (req, res) => {
   try {
+    //Remove user posts
+    await Post.deleteMany({ user: req.user.id });
     //remove the profile
     await Profile.findOneAndRemove({ user: req.user.id }); //no variable needed for deletion
 

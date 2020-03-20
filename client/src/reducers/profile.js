@@ -1,4 +1,9 @@
-import { GET_PROFILE, PROFILE_ERROR, CLEAR_PROFILE } from '../actions/types';
+import {
+  GET_PROFILE,
+  PROFILE_ERROR,
+  CLEAR_PROFILE,
+  UPDATE_PROFILE
+} from '../actions/types';
 
 //actions to get profile, create it, clear it from the state, etc.
 
@@ -17,8 +22,9 @@ export default function(state = initialState, action) {
 
   switch (type) {
     case GET_PROFILE:
+    case UPDATE_PROFILE:
       return {
-        ...state,
+        ...state, //get current state
         profile: payload,
         loading: false
       };
