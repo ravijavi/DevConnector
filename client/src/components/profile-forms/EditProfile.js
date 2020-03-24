@@ -45,7 +45,7 @@ const EditProfile = ({
       youtube: loading || !profile.social ? '' : profile.social.youtube,
       instagram: loading || !profile.social ? '' : profile.social.instagram
     });
-  }, [loading]); //when it loads, we want this to run
+  }, [loading, getCurrentProfile]); //when it loads, we want this to run
 
   const {
     //destructure them to use them as variables
